@@ -2,6 +2,7 @@ import os
 
 def lambda_handler(event, context):
     file_path = os.path.join(os.path.dirname(__file__), '../archivo.txt')
+    a = 1
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             contenido = f.read()
