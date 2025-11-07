@@ -2,15 +2,15 @@ name: $(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
   branches:
-	include: [ main, develop ]
+    include: [ main, develop ]
   
- pr: 
-	branches:
-		include: [ main, develop ]
+pr: 
+  branches:
+    include: [ main, develop ]
 
 pool:
-	vmImage: 'ubuntu-latest'
-	
+  vmImage: 'ubuntu-latest'
+
 steps:
 - script: echo "Hola desde Azure Pipelines, disparado por Github!"
   displayName: 'Build'
