@@ -1,16 +1,30 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)
-
 trigger:
-  branches:
-    include: [ main, develop ]
-  
-pr: 
-  branches:
-    include: [ main, develop ]
+- main
+- develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
+
+variables:
+  awsRegion: us-east-1
+  lambdaFunction: test-lambda-from-azure-devops-and-github
 
 steps:
-- script: echo "Hola desde Azure Pipelines, disparado por Github!"
-  displayName: 'Build'
+  # Empaquetar el código (ajusta si usas Node/Python/Java/.NET)
+  - script: |
+      rm -f function.zip
+      zip -r function.zip . -x ".git/*" "tests/*" ".azure-pipelines/*"
+    displayName: "Empaquetar Lambda"
+
+  # Usando la tarea 'AWS CLI' de la extensión (requiere service connection)
+  - task: AWSCLI@1
+    displayName: "Actualizar código de Lambda"
+    inputs:
+      awsCredentials: 'service-connection-aws-dev-test'     # Nombre de tu Service connection
+      regionName: '$(awsRegion)'
+      command: 'lambda'
+      arguments: >
+        update-function-code
+        --function-name $(lambdaFunction)
+        --zip-file fileb://function.zip
+
