@@ -20,11 +20,11 @@ steps:
   - task: AWSCLI@1
     displayName: "Actualizar código de Lambda"
     inputs:
-      awsCredentials: 'service-connection-aws-dev-test'     # Nombre de tu Service connection
+      awsCredentials: 'aws-conn-prod'     # nombre de tu Service connection
       regionName: '$(awsRegion)'
-      command: 'lambda'
-      arguments: >
-        update-function-code
+      awsCommand: 'lambda'
+      awsSubCommand: 'update-function-code'
+      awsArguments: >
         --function-name $(lambdaFunction)
         --zip-file fileb://function.zip
 
