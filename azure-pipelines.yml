@@ -20,7 +20,7 @@ steps:
   - task: AWSCLI@1
     displayName: "Actualizar código de Lambda"
     inputs:
-      awsCredentials: 'aws-conn-prod'     # nombre de tu Service connection
+      awsCredentials: 'service-connection-aws-dev-test'     # nombre de tu Service connection
       regionName: '$(awsRegion)'
       awsCommand: 'lambda'
       awsSubCommand: 'update-function-code'
